@@ -4,7 +4,11 @@ import numpy as np
 import geopandas as gpd
 
 
-Arap_outline = gpd.read_file('/Users/jamesswank/Python_Projects/Situational_Awareness_v2/us-county-boundaries')
+from utilities import (
+    get_Arap_Outline
+)
+
+Arap_outline = get_Arap_Outline()
 
 
 

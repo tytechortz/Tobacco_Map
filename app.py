@@ -7,14 +7,13 @@ import geopandas as gpd
 
 
 from figures_utilities import (
-    get_figure
+    get_figure,
 )
 
 from utilities import (
-    get_grocery_stores,
-    get_block_data
+    get_schools,
+    get_Tobacco_Retailers
 )
-
 
 
 
@@ -95,22 +94,24 @@ app.layout = dbc.Container([
     Input("buffer", 'value'))
 def update_Choropleth(radius):
     
-    df = pd.read_csv("/Users/jamesswank/Downloads/GC_tobacco_retailers.csv")
+    df = get_Tobacco_Retailers()
     # print(df)
     # print(df['x'])
     # print(df.columns)
     
     gdf = gpd.GeoDataFrame(
-        df, geometry=gpd.points_from_xy(df.x, df.y), crs="EPSG:26913" 
+        df, geometry=gpd.points_from_xy(df.x, df.y), crs="EPSG:4326" 
     )
     # gdf = gpd.GeoDataFrame(
     #     df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude), crs="EPSG:4326" 
     # )
 
-    gdf.to_crs(26913)
+    # gdf.to_crs(26913)
 
-    schools = pd.read_csv("/Users/jamesswank/Downloads/CDPHE_CDOE_School_Locations_and_District_Office_Locations.csv")
-    print(schools.columns)
+    print(gdf.columns)
+    # schools = pd.read_csv("/Users/jamesswank/Downloads/CDPHE_CDOE_School_Locations_and_District_Office_Locations.csv")
+    schools = get_schools()
+    # print(schools.columns)
 
 
 
