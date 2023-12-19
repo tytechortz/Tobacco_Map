@@ -21,3 +21,9 @@ def get_Tobacco_Retailers():
     df = pd.read_csv(r"C:\Users\phna007\OneDrive - Arapahoe County Government\Documents 1\ArcGIS\Projects\MyProject22\GC_tobacco_retailers.csv")
 
     return df
+
+def get_compliance_records():
+    df = pd.read_csv(r"C:\Users\phna007\Downloads\compliancecheckreport.csv", encoding='latin-1')
+    
+    return df
+

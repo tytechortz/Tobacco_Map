@@ -108,7 +108,7 @@ def update_Choropleth(radius):
 
     # gdf.to_crs(26913)
 
-    print(gdf.columns)
+    # print(gdf.columns)
     # schools = pd.read_csv("/Users/jamesswank/Downloads/CDPHE_CDOE_School_Locations_and_District_Office_Locations.csv")
     schools = get_schools()
     # print(schools.columns)

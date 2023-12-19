@@ -9,17 +9,19 @@ from utilities import (
 )
 
 Arap_outline = get_Arap_Outline()
-
+# print(Arap_outline)
 
 
 def get_Choropleth(gdf, schools, marker_opacity, marker_line_width, marker_line_color, fig=None):
     # print(gd['geometry'])
     # print(gd.columns)
-    print(gdf['Retailer_Name'])
+    # print(gdf['Retailer_Name'])
+    # print(schools.columns)
     
     if fig is None:
         fig = go.Figure(
         )
+
 
     # fig.add_trace(
     #     go.Choroplethmapbox(
@@ -48,32 +50,42 @@ def get_Choropleth(gdf, schools, marker_opacity, marker_line_width, marker_line_
                 size=5,
                 color='red'
             ),
-            customdata=gdf['Retailer_Name'],
-            # hoverinfo='lat',
-            showlegend=False,
-            hovertemplate='<br>'.join([
-            'Store: %{customdata}',
-            ]),
+            # customdata=gdf['Retailer_Name'],
+            hoverinfo='text',
+            # showlegend=False,
+            # hovertemplate='<br>'.join([
+            # 'Store: %{customdata}',
+            # ]),
+            name='Retailer'
         )
     )
 
-    # fig.add_trace(
-    #     go.Scattermapbox(
-    #         lat=schools['LATITUDE'],
-    #         lon=schools['LONGITUDE'],
-    #         mode='markers',
-    #         marker=go.scattermapbox.Marker(
-    #             size=5,
-    #             color='green'
-    #         ),
-    #         # hoverinfo=schools['School_Name'],
-    #         # customdata=schools['School_Name'],
-    #         # hoverinfo='text',
-    #         showlegend=False,
-    #         # hovertemplate='<br>'.join([
-    #         # 'School: %{customdata}',
-    #         # ]),
-    #     )
+    fig.add_trace(
+        go.Scattermapbox(
+            lat=schools['lat'],
+            lon=schools['lon'],
+            mode='markers',
+            marker=go.scattermapbox.Marker(
+                size=10,
+                color='green'
+            ),
+            # line=schools['Name'],
+            hoverinfo="text",
+            # customdata=schools['Name'],
+            # hoverinfo='text',
+            # showlegend=False,
+            # hovertemplate='<br>'.join([
+            # 'School: %{customdata}',
+            # ]),
+            # hovertemplate= 'School: %{line}'
+        )
+    )
+
+    # fig.update_traces(
+    #     customdata=schools['Name'],
+    #     hovertemplate='<br>'.join([
+    #         'School: %{customdata}',
+    #         ]),
     # )
 
     return fig
