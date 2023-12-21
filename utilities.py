@@ -23,7 +23,31 @@ def get_Tobacco_Retailers():
     return df
 
 def get_compliance_records():
-    df = pd.read_csv(r"C:\Users\phna007\Downloads\compliancecheckreport.csv", encoding='latin-1')
-    
+    df = pd.read_csv(r"C:\Users\phna007\Downloads\Tobacco_Licenses_12.08.2023.csv", encoding='latin1')
+    # print(df)
     return df
+
+# def get_combo():
+#     df = pd.read_csv(r"C:\Users\phna007\OneDrive - Arapahoe County Government\Desktop\Tobacco_Map\Tobacco_Map\tobacco_combo.csv")
+#     print(df.columns)
+#     print(df.iloc[:, 1].sort_values())
+#     df = df[~df['Count'].isna()]
+#     df['occur'] = df.groupby('ID')['ID'].transform('size')
+
+#     return df
+
+def get_combo():
+    df = pd.read_csv(r"C:\Users\phna007\OneDrive - Arapahoe County Government\Desktop\Tobacco_Map\Tobacco_Map\tobacco_combo_3.csv")
+    print(df.columns)
+    print(df.iloc[:, 1].sort_values())
+    df = df[~df['count'].isna()]
+    print(df)
+    df = df[df['County'] == 'Arapahoe']
+    print(df)
+    
+    # df['occur'] = df.groupby('ID')['ID'].transform('size')
+
+    return df
+
+
 

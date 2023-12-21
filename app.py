@@ -12,7 +12,9 @@ from figures_utilities import (
 
 from utilities import (
     get_schools,
-    get_Tobacco_Retailers
+    get_Tobacco_Retailers,
+    get_compliance_records,
+    get_combo
 )
 
 
@@ -52,25 +54,26 @@ def blank_fig(height):
 app.layout = dbc.Container([
     header,
     dbc.Row([
-        # dbc.Col([
-        #     dcc.Checklist(
-        #         id="stores",
-        #         options=[
-        #             {"label": i, "value": i}
-        #             for i in ["Safeway", "King Sooper", "Sprouts", "Walmart SC", "Walmart NM", "Whole Foods", "Trader Joe's", "Target", "Save A Lot", "Sams", "Natural Grocers", "Costco", "Lowe's", "El Mercado De Colorado" ]
-        #         ],
-        #         value=["Safeway", "King Sooper", "Sprouts", "Walmart SC", "Walmart NM", "Whole Foods", "Trader Joe's", "Target", "Save A Lot", "Sams", "Natural Grocers", "Costco", "Lowe's", "El Mercado De Colorado" ],
-        #         inline=True
-        #     ),
-        # ], width=6),
         dbc.Col([
-            dcc.Input(
-                id='buffer',
-                type='number',
-                value=.5,
-                step=.1,
-                placeholder='Input radius in km'
-            )
+            dcc.Checklist(
+                id="checks",
+                options=[
+                    {"label": i, "value": i}
+                    # for i in ["1", "2", "3", "4", "5"]
+                    for i in [1, 2, 3, 4, 5]
+                ],
+                # value=["1", "2", "3", "4", "5"],
+                inline=True
+            ),
+        ], width=6),
+        # dbc.Col([
+        #     dcc.Input(
+        #         id='buffer',
+        #         type='number',
+        #         value=1,
+        #         step=1,
+        #         placeholder='Input radius in km'
+        #     )
         #     dcc.Slider(0, 2, value=1.6,
         #         marks={
         #             0: {'label': '0', 'style': {'color': 'white'}},
@@ -79,7 +82,7 @@ app.layout = dbc.Container([
         #         },
         #         id = 'radius',
         #     ),
-        ], width=2),
+        # ], width=2),
     ]),
     dbc.Row([
         html.Div([
@@ -91,17 +94,17 @@ app.layout = dbc.Container([
 
 @app.callback(
     Output("fd-map", "figure"),
-    Input("buffer", 'value'))
-def update_Choropleth(radius):
-    
+    Input("checks", 'value'))
+def update_Choropleth(checks):
+    print(checks)
     df = get_Tobacco_Retailers()
     # print(df)
     # print(df['x'])
     # print(df.columns)
     
-    gdf = gpd.GeoDataFrame(
-        df, geometry=gpd.points_from_xy(df.x, df.y), crs="EPSG:4326" 
-    )
+    # gdf = gpd.GeoDataFrame(
+    #     df, geometry=gpd.points_from_xy(df.x, df.y), crs="EPSG:4326" 
+    # )
     # gdf = gpd.GeoDataFrame(
     #     df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude), crs="EPSG:4326" 
     # )
@@ -113,7 +116,23 @@ def update_Choropleth(radius):
     schools = get_schools()
     # print(schools.columns)
 
+    gdf = get_combo()
+    # print(gdf['count'].max())
+    # print(gdf['count'].min())
 
+    # print(type(checks[0]))
+
+
+    color_dict = {1: 'blue', 2: 'green', 3: 'orange', 4: 'red'}
+
+
+    gdf['color'] = gdf['count'].map(color_dict)
+    # print(gdf.dtypes)
+
+    gdf = gdf.loc[gdf['count'].isin(checks)]
+    # print(gdf)
+    # gdf = gdf[gdf['count'] == radius]
+    # gdf.to_csv('counts.csv')
 
     fig = get_figure(gdf, schools)
 

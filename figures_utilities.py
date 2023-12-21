@@ -43,43 +43,43 @@ def get_Choropleth(gdf, schools, marker_opacity, marker_line_width, marker_line_
 
     fig.add_trace(
         go.Scattermapbox(
-            lat=gdf['y'],
-            lon=gdf['x'],
+            lat=gdf['Y'],
+            lon=gdf['X'],
             mode='markers',
             marker=go.scattermapbox.Marker(
                 size=5,
-                color='red'
+                color=gdf['color']
             ),
-            # customdata=gdf['Retailer_Name'],
+            customdata=gdf['DOING_BUSINESS_AS'],
             hoverinfo='text',
             # showlegend=False,
-            # hovertemplate='<br>'.join([
-            # 'Store: %{customdata}',
-            # ]),
+            hovertemplate='<br>'.join([
+            'Store: %{customdata}',
+            ]),
             name='Retailer'
         )
     )
 
-    fig.add_trace(
-        go.Scattermapbox(
-            lat=schools['lat'],
-            lon=schools['lon'],
-            mode='markers',
-            marker=go.scattermapbox.Marker(
-                size=10,
-                color='green'
-            ),
-            # line=schools['Name'],
-            hoverinfo="text",
-            # customdata=schools['Name'],
-            # hoverinfo='text',
-            # showlegend=False,
-            # hovertemplate='<br>'.join([
-            # 'School: %{customdata}',
-            # ]),
-            # hovertemplate= 'School: %{line}'
-        )
-    )
+    # fig.add_trace(
+    #     go.Scattermapbox(
+    #         lat=schools['lat'],
+    #         lon=schools['lon'],
+    #         mode='markers',
+    #         marker=go.scattermapbox.Marker(
+    #             size=10,
+    #             color='green'
+    #         ),
+    #         # line=schools['Name'],
+    #         hoverinfo="text",
+    #         # customdata=schools['Name'],
+    #         # hoverinfo='text',
+    #         # showlegend=False,
+    #         # hovertemplate='<br>'.join([
+    #         # 'School: %{customdata}',
+    #         # ]),
+    #         # hovertemplate= 'School: %{line}'
+    #     )
+    # )
 
     # fig.update_traces(
     #     customdata=schools['Name'],
